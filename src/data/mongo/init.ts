@@ -6,16 +6,16 @@ interface ConnectionOptions {
 }
 
 export class MongoDatabase {
-  static async connect(options: ConnectionOptions) {
+  static async connect(options: ConnectionOptions): Promise<boolean> {
     const { url, dbName } = options;
 
     try {
       await mongoose.connect(url, {
         dbName,
-      })
-      console.log('MongoDB connected');
+      });
+
+      return true;
     } catch (e) {
-      console.error(e);
       throw e;
     }
 

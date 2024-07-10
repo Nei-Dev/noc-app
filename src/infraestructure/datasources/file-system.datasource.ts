@@ -5,9 +5,9 @@ import fs from 'fs';
 export class FileSystemDatasource implements LogDatasource {
 
   private readonly logPath = 'logs/';
-  private readonly lowLogsPath = 'logs/logs-low.log';
-  private readonly mediumLogsPath = 'logs/logs-medium.log';
-  private readonly highLogsPath = 'logs/logs-high.log';
+  private readonly lowLogsPath = `${this.logPath}/logs-low.log`;
+  private readonly mediumLogsPath = `${this.logPath}/logs-medium.log`;
+  private readonly highLogsPath = `${this.logPath}/logs-high.log`;
 
   constructor () {
     this.createLogFiles();
@@ -46,6 +46,6 @@ export class FileSystemDatasource implements LogDatasource {
   async getLogs(level: LogSeverity): Promise<LogEntity[]> {
     const path = this.getPathByLevel(level);
     const logs = this.getLogsFromFile(path);
-    return logs.map(LogEntity.fromJSON);
+    return logs.filter(Boolean).map(LogEntity.fromJSON);
   }
 }

@@ -13,7 +13,7 @@ export class SendEmailLogs implements SendLogEmailUseCase {
     private readonly logRepository: LogRepository,
   ) {}
 
-  async execute(to: string | string[]) {
+  async execute(to: string | string[]): Promise<boolean> {
 
     try{
       const sent = await this.emailService.sendEmailWithFileSystemLogs(to);
